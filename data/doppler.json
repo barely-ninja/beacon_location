@@ -1,0 +1,56 @@
+[
+    {
+        "clip_name": "det1_f2_p1",
+        "filename": "./ocean_shield/video/V20140203.mp4",
+        "sampling_rate": 44100,
+        "time_range": [21.5, 44.3],
+        "filter": [2.6, 4.1],
+        "fold": 1.106,
+        "window":[39200, 42400]
+    },
+    {
+        "clip_name": "det1_f3_p1",
+        "filename": "./ocean_shield/video/V20140203.mp4",
+        "sampling_rate": 44100,
+        "time_range": [44.5, 67.33],
+        "filter": [2.6, 4.1],
+        "fold": 1.106,
+        "window":[23900, 25400]
+    },
+    {
+        "clip_name": "det2_f1_p1",
+        "filename": "./ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [4.15, 18.4],
+        "filter": [1.1, 2.6],
+        "fold": 1.18,
+        "window":[41800, 44400]
+    },
+    {
+        "clip_name": "det2_f2_p1",
+        "filename": "./ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [18.5, 27.99],
+        "filter": [1.1, 2.6],
+        "fold": 1.17,
+        "window":[14000, 16700]
+    },
+    {
+        "clip_name": "det2_f1_p2",
+        "filename": "./ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [4.15, 18.4],
+        "filter": [4.3, 6.4],
+        "fold": 1.18,
+        "window":[29000, 29800]
+    },
+    {
+        "clip_name": "det2_f2_p2",
+        "filename": "./ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [18.5, 27.99],
+        "filter": [4.3, 6.4],
+        "fold": 1.17,
+        "window":[1100, 2900]
+    }
+]
