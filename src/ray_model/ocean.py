@@ -1,9 +1,14 @@
-def load_tsv(fn):
-    pass
-
+import numpy as np
+from scipy import interpolate
 
 class Ocean():
     def _init_(self, c_fn, a_fn):
-        pass
-    def find_params(z_i, z_o, freq):
-        return [c_i, c_o, cg], [a_i, a_o, ag]
+        c_tab = np.loadtxt(c_fn)
+        a_tab = np.loadtxt(a_fn)
+        self.c_spl = interpolate.splrep(*c_tab, s=0)
+        self.a_spl = interpolate.bisplrep(*a_tab, s=0)
+
+    def make_props(self, zs, freq=33300):
+        a = interpolate.splev(zs, freq, self.a_spl)
+        c = interpolate.bisplev(zs, freq, self.c_spl)
+        return c, a
