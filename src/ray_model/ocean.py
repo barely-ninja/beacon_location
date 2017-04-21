@@ -2,13 +2,13 @@ import numpy as np
 from scipy import interpolate
 
 class Ocean():
-    def _init_(self, c_fn, a_fn):
+    def __init__(self, c_fn, a_fn):
         c_tab = np.loadtxt(c_fn)
         a_tab = np.loadtxt(a_fn)
-        self.c_spl = interpolate.splrep(*c_tab, s=0)
-        self.a_spl = interpolate.bisplrep(*a_tab, s=0)
+        self.c_spl = interpolate.splrep(*c_tab.T, w=np.ones_like(c_tab[:,0]))
+        self.a_spl = interpolate.bisplrep(*a_tab.T, w=np.ones_like(a_tab[:,0]))
 
-    def make_props(self, zs, freq=33300):
-        a = interpolate.splev(zs, freq, self.a_spl)
-        c = interpolate.bisplev(zs, freq, self.c_spl)
-        return c, a
+    def evaluate(self, zs, freq):
+        c = interpolate.splev(zs, self.c_spl)
+        a = interpolate.bisplev(zs, freq, self.a_spl)
+        return np.asscalar(c), a*1e-3
