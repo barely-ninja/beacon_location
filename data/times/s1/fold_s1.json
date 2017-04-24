@@ -5,7 +5,7 @@
         "sampling_rate": 44100,
         "time_range": [17.9, 21.4],
         "filter": [2.6, 4.1],
-        "fold": 1.106,
+        "fold": 1.1017,
         "window":[18800, 21000],
         "plot_scale":[3e-3, 1e-2]
     },
@@ -15,8 +15,8 @@
         "sampling_rate": 44100,
         "time_range": [21.5, 44.3],
         "filter": [2.6, 4.1],
-        "fold": 1.106,
-        "window":[39200, 42400],
+        "fold": 1.1084,
+        "window":[38200, 40400],
         "plot_scale":[3e-4, 5e-3]
     },
     {
@@ -25,7 +25,7 @@
         "sampling_rate": 44100,
         "time_range": [44.5, 67.33],
         "filter": [2.6, 4.1],
-        "fold": 1.106,
+        "fold": 1.1057,
         "window":[23900, 25400],
         "plot_scale":[4e-4, 5e-3]
     },
@@ -35,8 +35,8 @@
         "sampling_rate": 44100,
         "time_range": [4.15, 18.4],
         "filter": [1.1, 2.6],
-        "fold": 1.18,
-        "window":[41800, 44400],
+        "fold": 1.1811,
+        "window":[41700, 44000],
         "plot_scale":[2e-3, 2e-2]
     },
     {
@@ -45,8 +45,8 @@
         "sampling_rate": 44100,
         "time_range": [18.5, 27.99],
         "filter": [1.1, 2.6],
-        "fold": 1.17,
-        "window":[14000, 16700],
+        "fold": 1.1737,
+        "window":[14000, 16500],
         "plot_scale":[1e-3, 1.2e-2]
     },
     {
@@ -55,8 +55,8 @@
         "sampling_rate": 44100,
         "time_range": [4.15, 18.4],
         "filter": [4.3, 6.4],
-        "fold": 1.18,
-        "window":[29000, 29800],
+        "fold": 1.1791,
+        "window":[29000, 30500],
         "plot_scale":[1e-4, 0.7e-3]
     },
     {
@@ -65,8 +65,8 @@
         "sampling_rate": 44100,
         "time_range": [18.5, 27.99],
         "filter": [4.3, 6.4],
-        "fold": 1.17,
-        "window":[1100, 2900],
+        "fold": 1.1724,
+        "window":[1000, 2000],
         "plot_scale":[2e-4, 0.7e-3]
     }
 ]

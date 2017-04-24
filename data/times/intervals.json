@@ -1,0 +1,67 @@
+[
+    {
+        "wave_name": "src1 main",
+        "files":
+        [
+            {
+                "name": "vid1_pt1_src1",
+                "dt": 1.106,
+                "picks": "./s1/m1p1s1.tsv"
+            },
+            {   
+                "name": "vid1_pt3_src1",
+                "dt": 1.106,
+                "picks": "./s1/m1p3s1.tsv"
+            },
+            {
+                "name": "vid1_pt2_src1",
+                "dt": 1.106,
+                "picks": "./s1/m1p2s1.tsv"
+            },
+            {   
+                "name": "vid2_pt2_src1",
+                "dt": 1.1737,
+                "picks": "./s1/m2p2s1.tsv"
+            },
+            {   
+                "name": "vid2_pt1_src1",
+                "dt": 1.18,
+                "picks": "./s1/m2p1s1.tsv"
+            }
+        ]
+    },
+    {
+        "wave_name": "src1 surface reflection",
+        "files":
+        [
+            {   
+                "name": "vid2_pt2_ref1",
+                "dt": 1.17,
+                "picks": "./s1/m2p2r1.tsv"
+            },
+            {   
+                "name": "vid2_pt1_ref1",
+                "dt": 1.18,
+                "picks": "./s1/m2p1r1.tsv"
+            }
+
+        ]
+    },
+    {
+        "wave_name": "src2 maybe",
+        "files":
+        [
+            {   
+                "name": "vid1_pt3_src2",
+                "dt": 0.973,
+                "picks": "./s2/m1p3s2.tsv"
+            },
+            {   
+                "name": "vid1_pt2_src2",
+                "dt": 0.973,
+                "picks": "./s2/m1p2s2.tsv"
+            }
+
+        ]
+    }
+]
