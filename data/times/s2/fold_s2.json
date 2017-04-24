@@ -1,0 +1,42 @@
+[
+    {
+        "clip_name": "m1_p2_s2",
+        "filename": "../../ocean_shield/video/V20140203.mp4",
+        "sampling_rate": 44100,
+        "time_range": [21.5, 44.3],
+        "filter": [5.6, 10],
+        "fold": 0.973,
+        "window":[35000, 39000],
+        "plot_scale":[7e-5, 7e-4]
+    },
+    {
+        "clip_name": "m1_p3_s2",
+        "filename": "../../ocean_shield/video/V20140203.mp4",
+        "sampling_rate": 44100,
+        "time_range": [44.5, 67.33],
+        "filter": [5.6, 10],
+        "fold": 0.973,
+        "window":[38000, 40000],
+        "plot_scale":[7e-5, 7e-4]
+    },
+    {
+        "clip_name": "m2_p1_s2",
+        "filename": "../../ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [4.15, 18.4],
+        "filter": [4.3, 6.4],
+        "fold": 0.973,
+        "window":[0, -2],
+        "plot_scale":[7e-5, 7e-4]
+    },
+    {
+        "clip_name": "m2_p2_s2",
+        "filename": "../../ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [18.5, 27.99],
+        "filter": [4.3, 6.4],
+        "fold": 0.973,
+        "window":[0, -2],
+        "plot_scale":[7e-5, 7e-4]
+    }
+] 

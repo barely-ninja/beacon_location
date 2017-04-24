@@ -1,0 +1,72 @@
+[
+    {
+        "clip_name": "m1_p1_s1",
+        "filename": "../../ocean_shield/video/V20140203.mp4",
+        "sampling_rate": 44100,
+        "time_range": [17.9, 21.4],
+        "filter": [2.6, 4.1],
+        "fold": 1.106,
+        "window":[18800, 21000],
+        "plot_scale":[3e-3, 1e-2]
+    },
+    {
+        "clip_name": "m1_p2_s1",
+        "filename": "../../ocean_shield/video/V20140203.mp4",
+        "sampling_rate": 44100,
+        "time_range": [21.5, 44.3],
+        "filter": [2.6, 4.1],
+        "fold": 1.106,
+        "window":[39200, 42400],
+        "plot_scale":[3e-4, 5e-3]
+    },
+    {
+        "clip_name": "m1_p3_s1",
+        "filename": "../../ocean_shield/video/V20140203.mp4",
+        "sampling_rate": 44100,
+        "time_range": [44.5, 67.33],
+        "filter": [2.6, 4.1],
+        "fold": 1.106,
+        "window":[23900, 25400],
+        "plot_scale":[4e-4, 5e-3]
+    },
+    {
+        "clip_name": "m2_p1_s1",
+        "filename": "../../ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [4.15, 18.4],
+        "filter": [1.1, 2.6],
+        "fold": 1.18,
+        "window":[41800, 44400],
+        "plot_scale":[2e-3, 2e-2]
+    },
+    {
+        "clip_name": "m2_p2_s1",
+        "filename": "../../ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [18.5, 27.99],
+        "filter": [1.1, 2.6],
+        "fold": 1.17,
+        "window":[14000, 16700],
+        "plot_scale":[1e-3, 1.2e-2]
+    },
+    {
+        "clip_name": "m2_p1_r1",
+        "filename": "../../ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [4.15, 18.4],
+        "filter": [4.3, 6.4],
+        "fold": 1.18,
+        "window":[29000, 29800],
+        "plot_scale":[1e-4, 0.7e-3]
+    },
+    {
+        "clip_name": "m2_p2_r1",
+        "filename": "../../ocean_shield/video/V20140224.mp4",
+        "sampling_rate": 44100,
+        "time_range": [18.5, 27.99],
+        "filter": [4.3, 6.4],
+        "fold": 1.17,
+        "window":[1100, 2900],
+        "plot_scale":[2e-4, 0.7e-3]
+    }
+]

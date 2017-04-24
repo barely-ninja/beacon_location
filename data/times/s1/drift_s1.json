@@ -1,0 +1,42 @@
+{
+    "sampling":44100,
+    "curves":
+    [
+        {
+            "name": "vid1_pt1_src1",
+            "dt": 1.106,
+            "t_det": "16-45",
+            "t_len": "2-20",
+            "picks": "./m1p1s1.tsv"
+        },
+        {
+            "name": "vid1_pt2_src1",
+            "dt": 1.106,
+            "t_det": "16-45",
+            "t_len": "2-20",
+            "picks": "./m1p2s1.tsv"
+        },
+        {   
+            "name": "vid1_pt3_src1",
+            "dt": 1.106,
+            "t_det": "16-45",
+            "t_len": "2-20",
+            "picks": "./m1p3s1.tsv"
+        },
+        {   
+            "name": "vid2_pt1_src1",
+            "dt": 1.18,
+            "t_det": "21-27",
+            "t_len": "0-13",
+            "picks": "./m2p1s1.tsv"
+        },
+        {   
+            "name": "vid2_pt2_src1",
+            "dt": 1.17,
+            "t_det": "21-27",
+            "t_len": "0-13",
+            "picks": "./m2p2s1.tsv"
+        }
+
+    ]
+}

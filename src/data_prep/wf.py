@@ -38,9 +38,10 @@ def main(args):
             env = np.array(envelope(wind_ping))
             envs.append(np.log10(env+1))
         data = np.array(envs)
-        imshow(data.T, aspect='auto')#, clim=(2e-4, 1e-3))
-        #show()
-        savefig(clip['clip_name']+'.png')
+        clim = tuple(clip['plot_scale'])
+        imshow(data.T, aspect='auto', clim=clim)
+        show()
+        #savefig(clip['clip_name']+'.png')
 
 
 if __name__ == '__main__':
