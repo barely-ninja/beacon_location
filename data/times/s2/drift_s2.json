@@ -1,0 +1,20 @@
+{
+    "name": "src2",
+    "sampling": 44100,
+    "curves":
+    [
+        {   
+            "name": "vid1_pt3_src2",
+            "dt": 0.973,
+            "time": 68230,
+            "picks": "./m1p3s2.tsv"
+        },
+        {   
+            "name": "vid1_pt2_src2",
+            "dt": 0.973,
+            "time": 68670,
+            "picks": "./m1p2s2.tsv"
+        }
+
+    ]
+}

@@ -1,7 +1,14 @@
 from sys import argv
 from json import load
-
+from math import exp
 import numpy as np
+from scipy.optimize import curve_fit
+
+def make_parab(b):
+    def parabolic(x, a, c):
+        nonlocal b
+        return a*x*x+b*x+c
+    return parabolic
 
 def main(args):
  
@@ -17,12 +24,11 @@ def main(args):
         for src in wave['files']:
             data = np.loadtxt(src['picks'])
             raw_times = data[:, 0]*src['dt']+data[:, 1]/44100.0
-            i_times = (raw_times[1:]+raw_times[:-1])/2
-            ints = np.diff(raw_times)
-            skips = np.diff(data[:, 0])
-            ints /= skips
-            slope, off = np.polyfit(i_times, ints, 1)
-            print(src['name'], np.mean(ints), slope*1e3)
+            int0 = wave['drift'][0]+exp(wave['drift'][1]*(src['time']-wave['drift'][2]))
+            parab = make_parab(int0)
+            popt, pcov = curve_fit(parab, data[:,0], raw_times)
+            result = popt[0]/(src['dt']**2)
+            print(src['name'], result)
 
 
 if __name__ == '__main__':

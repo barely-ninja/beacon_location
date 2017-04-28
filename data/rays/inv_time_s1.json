@@ -1,0 +1,25 @@
+{
+    "model_fn":
+        {
+            "a":"./a.tsv",
+            "c":"./c.tsv"
+        },
+    "z_s": 5000,
+    "tow": 1.0,
+    "curves":
+    [
+        {
+            "name": "video1",
+            "z_r": 1400,
+            "t_off": 0,
+            "dint": 0.57e-4
+        },
+        {   
+            "name": "video2",
+            "z_r": 3000,
+            "t_off": 8800,
+            "dint": 1.2e-4
+        }
+
+    ]
+}

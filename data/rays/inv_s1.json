@@ -1,0 +1,30 @@
+{
+    "name": "src1",
+    "model_fn":
+        {
+            "a":"./a.tsv",
+            "c":"./c.tsv"
+        },
+    "bathy": "./GEBCO2104.asc",
+    "bound": "./bnd/uav_survey_bnd.shp",
+    "sig_loss": [
+        {   
+            "name": "050414 300m #1",
+            "coords": [-20.957, 104.061, 300],
+            "freq": 33.331,
+            "depth_change": 0
+        },
+        {   
+            "name": "050414 1400m #1",
+            "coords": [-20.993, 104.043, 1400],
+            "freq": 33.331,
+            "depth_change": 1
+        },
+        {   
+            "name": "050414 3000m #2",
+            "coords": [-21.078, 104.003, 3000],
+            "freq": 33.331,
+            "depth_change": 0
+        }
+    ]
+}

@@ -30,15 +30,12 @@ def main(args):
 
         data = np.loadtxt(curve['picks'])
         raw_times = data[:, 0]*curve['dt']+data[:, 1]/cfg['sampling']
-        i_times = (raw_times[1:]+raw_times[:-1])/2
-        ints = np.diff(raw_times)
-        ints /= np.floor(ints)
-        data_list.append(Interval(t1, t2, log(np.mean(ints)-1)))
+        i, off = np.polyfit(data[:,0], raw_times, 1)
+        data_list.append(Interval(t1, t2, log(i-1)))
     sort_data = sorted(data_list, key=lambda x: x.int)
-
     int1 = (sort_data[1].int+sort_data[2].int)/2
     int2 = (sort_data[3].int+sort_data[4].int)/2
-    tm1 = (7800+sort_data[1].t1+sort_data[1].t2)/2
+    tm1 = (7900+sort_data[1].t1+sort_data[1].t2)/2
     tm2 = (sort_data[3].t1+sort_data[3].t2)/2
     app_slope = (int2-int1)/(tm2-tm1)
     dint1 = (-sort_data[1].int+sort_data[2].int)/2
@@ -52,13 +49,15 @@ def main(args):
     tmp1 = tm1+(sort_data[0].int-int1)/app_slope
     to_hr = 24/86400
     print(t0, t_die*to_hr-24, app_slope)
-
+    
     times = [tmp1, tm1-dt1, tm1+dt1, tm2-dt2, tm2+dt2]
-    plot_range = range(30000, 100000, 5000)
-    plot_ints = [1+exp(5.478e-5*(x-109185)) for x in plot_range]
+    print(times)
+    #print([1+exp(5.5206e-5*(x-108908)) for x in times])
+    '''plot_range = range(30000, 100000, 5000)
+    plot_ints = [1+exp(5.5206e-5*(x-108908)) for x in plot_range]
     plot(times, [1+exp(x.int) for x in sort_data], 'b.')
     plot(plot_range, plot_ints)
-    show()
+    show()'''
 
 
 if __name__ == '__main__':
