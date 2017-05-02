@@ -1,63 +1,56 @@
-from math import pi, cos, sin, acos, tan, log, sqrt, copysign
+from math import pi, sqrt, log10, atan
 from collections import namedtuple
-import numpy as np
+from scipy.optimize import minimize_scalar
+from ray import Ray
 
 SoundProp = namedtuple('SoundProp', 'z c a')
 
-class AcousticField():
-    def __init__(self, ps):
+def send_ray(ray, distance, z):
+    result = next(ray)
+    zf = result['z']>z
+    while not result['r'] > distance:
+        if zf and result['z'] == z:
+            return result
+        pr_res = result
+        result = next(ray)
+    return pr_res
+
+def tl(result):
+    s = result['r']
+    labs = result['abs']
+    tloss = 20*log10(s)+labs
+    return tloss
+
+class Rays():
+    def __init__(self, ps, z_scale, iz_src, init_angle):
         self.props = [SoundProp(*row) for row in ps]
+        self.beta = init_angle
+        self.izs = iz_src
+        self.z_scale = z_scale
 
-    def __iter__(self):
-        for beta in np.linspace(-pi/2+0.1, -0.1, 50):
-            ray = Ray(beta, self.props)
-            yield ray.propagate()
+    def have_ray(self, iz_rcv, distance):
+        ray = Ray(self.beta, self.izs, self.props)
+        result = send_ray(ray, distance, iz_rcv)
+        if result['z'] < iz_rcv or tl(result) > 180:
+            return False
+        if result['z'] == iz_rcv and result['r'] < distance:
+            return False
+        return True
 
-class Ray():
-    def __init__(self, beta_i, props):
-        self.beta = beta_i
-        self.props = props
+    def find_ray(self, iz_rcv, distance):
 
-    def propagate(self):
-        layers = []
-        for i in range(len(self.props)-1):
-            layer = LinearVelocityLayer(self.beta, self.props[i], self.props[i+1])
-            prop_result = layer.propagate()
-            layers.append(prop_result)
-            self.beta = prop_result['beta']
-        return sum([x['dr'] for x in layers]), sum([x['tt'] for x in layers])
+        def dist_func(beta):
+            nonlocal self, distance, iz_rcv
+            ray = Ray(beta, self.izs, self.props)
+            result = send_ray(ray, distance, iz_rcv)
+            dist = ((result['z']-iz_rcv)*self.z_scale)**2+(result['r']-distance)**2
+            return dist
 
-class LinearVelocityLayer():
-    def __init__(self, beta_i, p_i, p_o):
-        self.beta_i = beta_i
-        self.zi, self.ci, _ = p_i
-        self.zo, self.co, _ = p_o
-        self.cg = (p_o.c-p_i.c)/(p_o.z-p_i.z)
-        self.ag = (p_o.a-p_i.a)/(p_o.z-p_i.z)
-        self.aoff = p_i.a-p_i.z*self.ag
+        max_ang = atan((iz_rcv-self.izs)*self.z_scale/distance)
+        #print(self.izs, iz_rcv, distance, max_ang, self.beta)
+        opt = minimize_scalar(dist_func, bounds=(max_ang-0.001, self.beta), method='bounded')
+        beta = opt.x
+        ray = Ray(beta, self.izs, self.props)
+        result = send_ray(ray, distance, iz_rcv)
+        return tl(result)
 
-
-    def propagate(self):
-
-        if self.cg == 0:
-            beta_o = self.beta_i
-            dz = self.zo-self.zi
-            dr = dz/tan(self.beta_i)
-            ds = sqrt(dr**2+dz**2)
-            tt = ds/self.ci
-        else:
-            self.rc = self.ci/(self.cg*cos(self.beta_i))
-            beta_o = copysign(acos(self.co*cos(self.beta_i)/self.ci), self.beta_i)
-            dr = self.rc*(sin(self.beta_i)-sin(beta_o))
-            ds = self.rc*(self.beta_i-beta_o)
-
-            tt = log((self.co*(1+sin(self.beta_i)))/(self.ci*(1+sin(beta_o))))/self.cg
-
-        dabs = self.aoff*ds+self.ag*self.rc*(dr+(beta_o-self.beta_i)*(self.rc*cos(self.beta_i)-self.zi))
-        return {
-            'beta': beta_o,
-            'dr':dr,
-            'tt': tt,
-            'ds': ds,
-            'dabs': dabs
-            }

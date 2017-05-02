@@ -5,8 +5,9 @@
             "a":"./a.tsv",
             "c":"./c.tsv"
         },
-    "bathy": "./GEBCO2104.asc",
+    "bathy": "./GEBCO2014.asc",
     "bound": "./bnd/uav_survey_bnd.shp",
+    "grid_step": 0.018,
     "sig_loss": [
         {   
             "name": "050414 300m #1",

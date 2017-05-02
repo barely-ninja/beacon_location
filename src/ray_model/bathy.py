@@ -13,7 +13,7 @@ def find_slope_pt(slon, slat, rlon, rlat, offset=1000):
     dist = sqrt((rx-sx)**2+(ry-sy)**2)
     slx = sx+(offset/dist)*(rx-sx)
     sly = sy+(offset/dist)*(ry-sy)
-    return to_latlon(slx, sly, zs, ls)
+    return dist, to_latlon(slx, sly, zs, ls)
 
 class Bathymetry():
     def __init__(self, fn):
@@ -23,8 +23,9 @@ class Bathymetry():
         return self.bat.extent
 
     def init_ray(self, src, rcv):
-        sl_lat, sl_lon = find_slope_pt(*src, *rcv, self.slope_offset)
-        depth_src = self.bat.sample(Point(*src, crs=self.bat.crs))
-        depth_slope = self.bat.sample(Point(sl_lon, sl_lat, crs=self.bat.crs))
-        init_angle = atan((depth_slope-depth_src)/self.slope_offset)
-        return depth_src, init_angle
+        dist, (sl_lat, sl_lon) = find_slope_pt(*src, *rcv, self.slope_offset)
+        depth_src = self.bat.sample(Point(src, crs=self.bat.crs))[0]
+        depth_slope = self.bat.sample(Point((sl_lon, sl_lat), crs=self.bat.crs))[0]
+        init_angle = atan((depth_src-depth_slope)/self.slope_offset)
+        #print(depth_slope, depth_src, init_angle)
+        return dist, -depth_src, init_angle

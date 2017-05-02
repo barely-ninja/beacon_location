@@ -1,25 +1,42 @@
 from sys import argv
 from json import load
-from math import pi, sin, sqrt
+from itertools import product
 import numpy as np
-from scipy.optimize import minimize
-from scipy.interpolate import splrep, splev
-from matplotlib.pyplot import show, plot, savefig, ylim, close
+from matplotlib.pyplot import show, savefig, close, imshow, gca
 from ocean import Ocean
-from rays import AcousticField
+from rays import Rays
+from bathy import Bathymetry
+from bounds import Bound
 
-def get_tt_model(z_s, z_r, files):
+def make_loss_model(files, bathy, freq, rcv, bnd):
     ocean = Ocean(files['c'], files['a'])
-    z = np.linspace(z_s, z_r, 10)
-    params = [(z[i], *ocean.evaluate(z[i], 33.3)) for i in range(len(z))]
-    rays = AcousticField(params)
-    result = np.array(list(rays))
-    spl = splrep(*result.T)
-    base = np.linspace(result[0,0], result[-1,0], 20)
-    d2tdx2 = splev(base, spl, der=2)
-    plot(base, d2tdx2)
-    show()
-    return spl
+    min_depth = 280
+    max_depth = 6000
+    z_step = 10
+    z = np.arange(min_depth, max_depth, z_step)
+    params = [(z[i], *ocean.evaluate(z[i], freq)) for i in range(len(z))]
+    lat_rcv, lon_rcv, depth_rcv = rcv
+    coords_rcv = (lon_rcv, lat_rcv)
+    def tl_func(coords_src):
+        nonlocal bathy, coords_rcv, depth_rcv, params, z_step, bnd, min_depth
+
+        def zind(depth):
+            nonlocal min_depth, z_step
+            return (int)((depth-min_depth) // z_step)
+        
+        if bnd.is_in(coords_src):
+            return 0
+        
+        distance, depth_src, init_angle = bathy.init_ray(coords_src, coords_rcv)
+        iz_src = zind(depth_src)
+        iz_rcv = zind(depth_rcv)
+        rays = Rays(params, z_step, iz_src, init_angle)
+        if rays.have_ray(iz_rcv, distance):
+            tl = rays.find_ray(iz_rcv, distance)
+        else:
+            tl = 0
+        return tl
+    return tl_func
 
 def main(args):
     try:
@@ -28,35 +45,33 @@ def main(args):
         print('Please specify input file name')
     with open(fn, 'rt') as cfg_file:
         cfg = load(cfg_file)
-        
+
     bathy = Bathymetry(cfg['bathy'])
-    data_list = []
-    inits = [1e3, 0]
-    bnds = [(0, 1e4), (-1e4, 1e4)]
-
-    for curve in cfg['curves']:
-        tt_spl = get_tt_model(cfg['z_s'], curve['z_r'], cfg['model_fn'])
-
-
-    '''data_list.append({'t':base, 'di':dint_i, 'spl':tt_spl, 't0':curve['t_off']})
-
-    min_func = make_min_func(data_list, cfg['tow'])
-    result = minimize(min_func, inits, bounds=bnds, method="L-BFGS-B", options={'eps':1e2})
-    print(result.x)
-    for i in range(len(data_list)):
-        v = cfg['tow']
-        rs = result.x[0]
-        t0 = result.x[1]-data_list[i]['t0']
-        print(-v*t0, sqrt(rs**2+(v*t0)**2))
-        spl = data_list[i]['spl']
-        model = make_model_func(rs, t0, v, spl)
-        plot(data_list[i]['t'], model(data_list[i]['t']))
-        plot(data_list[i]['t'], data_list[i]['di'])
-        ylim((0, 1/1500))
-        #savefig(cfg['curves'][i]['name']+'.png')
-        #close()
-        show()'''
-
-
+    area = bathy.extent()
+    bnd = Bound(cfg['bound'])
+    grid_step = cfg['grid_step']
+    x_iter = np.arange(area[0]+grid_step, area[1]-grid_step, grid_step)
+    y_iter = np.arange(area[2]+grid_step, area[3]-grid_step, grid_step)
+    dim_lon = len(x_iter)
+    dim_lat = len(y_iter)
+    dim_dets = len(cfg['sig_loss'])
+    tl_list = []
+    for point in cfg['sig_loss']:
+        tl_func = make_loss_model(cfg['model_fn'], bathy, point['freq'], point['coords'], bnd)
+        tl_grid = [tl_func((x, y)) for x, y in product(x_iter, y_iter)]
+        tl_list.append(np.array(tl_grid).reshape((dim_lon, dim_lat)).T)
+    all_conds = np.stack(tl_list, axis=2)
+    conds_true = np.logical_and(np.all(all_conds > 0, axis=2), np.all(all_conds < 160, axis=2))
+    #tl_grid = [y for x, y in product(x_iter, y_iter)]
+    #conds_true = np.array(tl_grid).reshape((dim_lon, dim_lat)).T
+    imshow(conds_true, origin='lower', cmap='coolwarm')
+    ax = gca()
+    xticks = np.arange(0, dim_lon, 5)
+    yticks = np.arange(0, dim_lat, 5)
+    ax.set_xticks(xticks)
+    ax.set_yticks(yticks)
+    ax.set_xticklabels([round((x+1)*grid_step+area[0],3) for x in xticks])
+    ax.set_yticklabels([round((y+1)*grid_step+area[2],3) for y in yticks])
+    show()
 if __name__ == '__main__':
     main(argv)
