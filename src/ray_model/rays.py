@@ -8,6 +8,7 @@ SoundProp = namedtuple('SoundProp', 'z c a')
 def send_ray(ray, distance, z):
     result = next(ray)
     zf = result['z']>z
+    pr_res = result
     while not result['r'] > distance:
         if zf and result['z'] == z:
             return result

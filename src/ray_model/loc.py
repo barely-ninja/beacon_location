@@ -61,7 +61,7 @@ def main(args):
         tl_grid = [tl_func((x, y)) for x, y in product(x_iter, y_iter)]
         tl_list.append(np.array(tl_grid).reshape((dim_lon, dim_lat)).T)
     all_conds = np.stack(tl_list, axis=2)
-    conds_true = np.logical_and(np.all(all_conds > 0, axis=2), np.all(all_conds < 160, axis=2))
+    conds_true = np.logical_and(np.all(all_conds > 0, axis=2), np.all(all_conds < 140, axis=2))
     #tl_grid = [y for x, y in product(x_iter, y_iter)]
     #conds_true = np.array(tl_grid).reshape((dim_lon, dim_lat)).T
     imshow(conds_true, origin='lower', cmap='coolwarm')

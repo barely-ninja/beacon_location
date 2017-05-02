@@ -1,26 +1,25 @@
 {
-    "bounds":[[103.7, 104.35],[-21.4, -20.8], [300, 5600]],
-    "resolution": [0.01, 0.01, 100],
-    "c":"./c.tsv",
-    "att": "./a.tsv",
-    "bnd": "./bnd.shp",
-    "bathy": "./bathy.asc",
-    "sources":[
-        
-        {            
-            "name": "src2",
-            "signals": [
-                {   
-                    "name": "080414 3000m #3",
-                    "coords": [-21.178,103.970, 3000],
-                    "peaks": [[27, 10]]
-                },
-                {   
-                    "name": "080414 3000m #4",
-                    "coords": [-21.205,104.136, 3000],
-                    "peaks": [[27, 10]]
-                }
-            ]
+    "name": "src1",
+    "model_fn":
+        {
+            "a":"./a.tsv",
+            "c":"./c.tsv"
+        },
+    "bathy": "./GEBCO2014.asc",
+    "bound": "./bnd/uav_survey_bnd.shp",
+    "grid_step": 0.018,
+    "sig_loss": [
+        {   
+            "name": "080414 3000m #3",
+            "coords": [-21.178,103.970, 3000],
+            "freq": 27.0,
+            "depth_change": 1
+        },
+        {   
+            "name": "080414 3000m #4",
+            "coords": [-21.205,104.136, 3000],
+            "freq": 27.0,
+            "depth_change": 1
         }
     ]
 }
