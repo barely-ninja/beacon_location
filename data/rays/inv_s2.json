@@ -8,17 +8,20 @@
     "bathy": "./GEBCO2014.asc",
     "bound": "./bnd/uav_survey_bnd.shp",
     "grid_step": 0.018,
+    "power": 160,
     "sig_loss": [
         {   
             "name": "080414 3000m #3",
             "coords": [-21.178,103.970, 3000],
             "freq": 27.0,
+            "noise": 10,
             "depth_change": 1
         },
         {   
             "name": "080414 3000m #4",
             "coords": [-21.205,104.136, 3000],
             "freq": 27.0,
+            "noise": 10,
             "depth_change": 1
         }
     ]
